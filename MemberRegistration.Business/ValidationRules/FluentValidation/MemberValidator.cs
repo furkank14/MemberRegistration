@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FluentValidation;
+using MemberRegistration.Entities.Concrete;
+
+namespace MemberRegistration.Business.ValidationRules.FluentValidation
+{
+    public class MemberValidator:AbstractValidator<Member>
+    {
+        public MemberValidator()
+        {
+            RuleFor(m => m.FirstName).NotEmpty();
+            RuleFor(m => m.LastName).NotEmpty();
+            RuleFor(m => m.DateOfBirth).NotEmpty();
+            RuleFor(m => m.TcNo).NotEmpty();
+            RuleFor(m => m.Email).NotEmpty();
+            RuleFor(m => m.Email).EmailAddress();
+            RuleFor(m => m.DateOfBirth).LessThan(DateTime.Now.AddYears(-18)).WithMessage("18 Yaşından Büyük Olmalısın...");
+            RuleFor(m => m.TcNo).Length(11);
+
+
+        }
+    }
+}
